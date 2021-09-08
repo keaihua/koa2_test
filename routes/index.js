@@ -50,6 +50,26 @@ router.post('/testpost', async (ctx, next) => {
   }
 })
 
+router.post('/toarr', async (ctx, next) => {
+  const query = ctx.query
+  let arr = []
+  let len = query.len || 100
+  for(let i =0; i < len; i++){
+    arr.push({
+      key: `第${i+1}次`,
+      value: i
+    })
+  }
+  ctx.body = {
+    code: 200,
+    data: {
+      arr: arr
+    },
+    msg: "hello im from post"
+  }
+})
+
+
 
 
 module.exports = router
