@@ -4,33 +4,15 @@ let co = require('co');//异步控制器
 
 
 /**获取列表 */
-let getLinkRouteLevelList = async (ctx, next) => {
-    let request = ctx.request;
-    let req_headers= request.headers
-    let req_body = request.body;//从请求body中获取参数
-    let req_query = request.query;
-    let postdata = JSON.stringify(req_body);//转换成字符串
-    var content = '';
-    var body_request = {
-        hostname:"newtest-logistics-api.intramirror.com",
-        port: 80,
-        path: `/tracking/monitor/getLinkRouteLevelList?type=${req_query.type}`,
-        method: "get",
-        headers: {
-            // "Accept": "application/json",
-            // "Content-Type": "application/json;charset=UTF-8",
-            // 'Content-Length': postdata.length,//填写数据长度
-            "token": req_headers.token
-        }
-    };
-
+let apiservice = async (ctx, next) => {
+    let content = ''
 	/***请求第三方接口***/
     function sendHttpRequest() {
     	/*****创建promise函数****/
         const start = new Date()
         return new Promise(function (resolve, reject) {
         	/*****正常的发请求****/
-            var req = http.request(body_request, (res) => {
+            var req = http.request(ctx.request_body, (res) => {
 				/*****设置编码****/
                 res.setEncoding('utf-8');
                 /*****合并返回数据****/
@@ -44,7 +26,7 @@ let getLinkRouteLevelList = async (ctx, next) => {
                 });
             })
 			/*****发送请求体*****/
-            req.write(postdata);
+            // req.write(postdata);
 			/*****异常处理*****/
             req.on('error', function (err) {
                 resolve({ result: false, errmsg: err.message });
@@ -64,4 +46,4 @@ let getLinkRouteLevelList = async (ctx, next) => {
     return res
 }
 
-module.exports = { getLinkRouteLevelList }
+module.exports = { apiservice }

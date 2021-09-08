@@ -2,7 +2,7 @@ const router = require('koa-router')()
 const fs = require('fs')
 const puppeteer = require('puppeteer')
 let path = require('path')
-const apiservice = require('../utils/serive');
+const logistic = require('../controller/logistic/logistic')
 
 router.get('/htmlToImg', async (ctx, next) => {
   const query = ctx.query
@@ -70,15 +70,7 @@ router.post('/toarr', async (ctx, next) => {
   }
 })
 
-router.get('/getLinkRouteLevelList', async (ctx, next) => {
-  let res = await apiservice.getLinkRouteLevelList(ctx,next)
-  ctx.body = {
-    success: res.data.success,
-    time: res.time + "ms",
-    data: res.data.data,
-    old: res.data,
-  }
-})
+router.get('/getLinkRouteLevelList', logistic.getLinkRouteLevelList)
 
 
 
