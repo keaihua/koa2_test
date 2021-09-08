@@ -74,6 +74,7 @@ router.get('/getLinkRouteLevelList', async (ctx, next) => {
   let res = await apiservice.getLinkRouteLevelList(ctx,next)
   ctx.body = {
     success: res.data.success,
+    time: res.time + "ms",
     data: res.data.data,
     old: res.data,
   }

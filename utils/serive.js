@@ -27,6 +27,7 @@ let getLinkRouteLevelList = async (ctx, next) => {
 	/***请求第三方接口***/
     function sendHttpRequest() {
     	/*****创建promise函数****/
+        const start = new Date()
         return new Promise(function (resolve, reject) {
         	/*****正常的发请求****/
             var req = http.request(body_request, (res) => {
@@ -39,7 +40,7 @@ let getLinkRouteLevelList = async (ctx, next) => {
                 /*****数据获取完成后 resolve提交****/
                 res.on('end', () => {
                     console.log(content)
-                    resolve({ result: true, data: JSON.parse(content) });
+                    resolve({ result: true, data: JSON.parse(content), time: new Date() - start });
                 });
             })
 			/*****发送请求体*****/
@@ -52,7 +53,6 @@ let getLinkRouteLevelList = async (ctx, next) => {
             req.end();
         });
     }
-
     let res = await co(function* () {//使用生成器函数并且掉用请求 res保存返回内容
         let req_res = yield sendHttpRequest();
         /**********/
