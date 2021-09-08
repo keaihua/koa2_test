@@ -4,6 +4,17 @@ let getLinkRouteLevelList = async (ctx, next) => {
   let request = ctx.request;
   let req_headers = request.headers;
   let req_query = request.query;
+  if (!req_headers.token){
+    ctx.body = {
+      success: false,
+      time: "0ms",
+      data: {
+        msg:"token已失效,请重试"
+      },
+      old: {},
+    };
+    return;
+  }
   ctx.request_body = {
     hostname: "newtest-logistics-api.intramirror.com",
     port: 80,
@@ -13,7 +24,7 @@ let getLinkRouteLevelList = async (ctx, next) => {
       token: req_headers.token,
     },
   };
-  
+
   let res = await apiservice(ctx, next);
 
   ctx.body = {
