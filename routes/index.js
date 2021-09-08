@@ -2,6 +2,7 @@ const router = require('koa-router')()
 const fs = require('fs')
 const puppeteer = require('puppeteer')
 let path = require('path')
+const apiservice = require('../utils/serive');
 
 router.get('/htmlToImg', async (ctx, next) => {
   const query = ctx.query
@@ -68,6 +69,16 @@ router.post('/toarr', async (ctx, next) => {
     msg: "hello im from post"
   }
 })
+
+router.get('/getLinkRouteLevelList', async (ctx, next) => {
+  let res = await apiservice.getLinkRouteLevelList(ctx,next)
+  ctx.body = {
+    success: res.data.success,
+    data: res.data.data,
+    old: res.data,
+  }
+})
+
 
 
 
