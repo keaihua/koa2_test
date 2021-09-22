@@ -1,6 +1,7 @@
 const {apiservice} = require("../utils/serive");
 
 let getLinkRouteLevelList = async (ctx, next) => {
+  console.log('---getLinkRouteLevelList ---')
   let request = ctx.request;
   let req_headers = request.headers;
   let req_query = request.query;
@@ -31,7 +32,6 @@ let getLinkRouteLevelList = async (ctx, next) => {
     success: res.data.success,
     time: res.time + "ms",
     data: res.data.data,
-    old: res.data,
   };
 };
 module.exports = {

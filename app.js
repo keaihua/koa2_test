@@ -9,6 +9,7 @@ const logger = require('koa-logger')
 const index = require('./routes/index')
 const static_ = require('koa-static')
 const path = require('path')
+const { FMTDT } = require('./utils/utils')
 
 
 // error handler
@@ -25,9 +26,12 @@ app.use(static_(__dirname, './'))
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
+  console.log('---logger - start ---',FMTDT(start,'yyyy-MM-dd HH:mm:ss:ms'))
   await next()
-  const ms = new Date() - start
-  console.log(`--logger--${ctx.method} ${ctx.url} - ${ms}ms`)
+  const end = new Date()
+  const ms = end - start
+  console.log('---logger - end   ---',FMTDT(end,'yyyy-MM-dd HH:mm:ss:ms'))
+  console.log(`                        ${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes

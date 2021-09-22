@@ -21,7 +21,6 @@ let apiservice = async (ctx, next) => {
                 });
                 /*****数据获取完成后 resolve提交****/
                 res.on('end', () => {
-                    console.log(content)
                     resolve({ result: true, data: JSON.parse(content), time: new Date() - start });
                 });
             })
@@ -38,7 +37,6 @@ let apiservice = async (ctx, next) => {
     let res = await co(function* () {//使用生成器函数并且掉用请求 res保存返回内容
         let req_res = yield sendHttpRequest();
         /**********/
-        //todo
         /**********/
         return req_res
     });
